@@ -13,10 +13,16 @@ export const ImgCarousel = ({ ImgCarous }) => {
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    if (activeStep > maxSteps - 2) {
+      setActiveStep(0);
+    }
   };
 
   const handleBack = () => {
     setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    if (activeStep < 1) {
+      setActiveStep(maxSteps - 1);
+    }
   };
 
   const handleStepChange = (step) => {
@@ -31,19 +37,19 @@ export const ImgCarousel = ({ ImgCarous }) => {
         enableMouseEvents
       >
         {ImgCarous.map((ImgCarou, i) => (
-          <Image key={i} src={ImgCarou} style={{ height: "50vh",objectFit:'fill' }} />
+          <Image
+            key={i}
+            src={ImgCarou}
+            style={{ height: "50vh", objectFit: "fill" }}
+          />
         ))}
       </AutoPlaySwipeableViews>
 
-      <ArrowLeft onClick={handleBack} disabled={activeStep === 0}>
-        <KeyboardArrowLeft
-          sx={{ fontSize: 68 }}
-        />
+      <ArrowLeft onClick={handleBack}>
+        <KeyboardArrowLeft sx={{ fontSize: 68 }} />
       </ArrowLeft>
-      <ArrowRight onClick={handleNext} disabled={activeStep === maxSteps - 1}>
-        <KeyboardArrowRight
-          sx={{ fontSize: 68 }}
-        />
+      <ArrowRight onClick={handleNext}>
+        <KeyboardArrowRight sx={{ fontSize: 68 }} />
       </ArrowRight>
     </>
   );

@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import {
   Nav,
   NavLink,
@@ -15,12 +15,11 @@ import {
 import { DiCssdeck } from "react-icons/di";
 import { FaBars } from "react-icons/fa";
 import { Bio } from "../../data/constants";
-import { useTheme } from "styled-components";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 export const Navbar = () => {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const theme = useTheme();
+  const [isOpen, setIsOpen] = useState(false);
+
   return (
     <Nav>
       <NavbarContainer>
@@ -28,12 +27,8 @@ export const Navbar = () => {
           <DiCssdeck size="3rem" color="white" />
           <Span style={{ color: "white" }}>Agustin Godinez</Span>
         </NavLogo>
-        <MobileIcon>
-          <FaBars
-            onClick={() => {
-              setIsOpen(!isOpen);
-            }}
-          />
+        <MobileIcon onClick={() => setIsOpen(!isOpen)}>
+          <FaBars />
         </MobileIcon>
         <NavItems>
           <NavLink href="#about">About</NavLink>
@@ -45,65 +40,20 @@ export const Navbar = () => {
         </NavItems>
         <ButtonContainer>
           <CVButton href={Bio.linkedin} target="display">
-             <LinkedInIcon sx={{marginRight:1}} /> LinkedIn
+            <LinkedInIcon sx={{ marginRight: 1 }} /> LinkedIn
           </CVButton>
         </ButtonContainer>
-        {isOpen && (
-          <MobileMenu isOpen={isOpen}>
-            <MobileLink
-              href="#about"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-            >
-              About
-            </MobileLink>
-            <MobileLink
-              href="#skills"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-            >
-              Skills
-            </MobileLink>
-            <MobileLink
-              href="#experience"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-            >
-              Experience
-            </MobileLink>
-            <MobileLink
-              href="#projects"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-            >
-              Projects
-            </MobileLink>
-            <MobileLink
-              href="#education"
-              onClick={() => {
-                setIsOpen(!isOpen);
-              }}
-            >
-              Education
-            </MobileLink>
-            <CVButton
-              style={{
-                padding: "10px 16px",
-                background: `${theme.primary}`,
-                color: "white",
-                width: "max-content",
-              }}
-              href={Bio.github}
-              target="_blank"
-            >
-              Github Profile
-            </CVButton>
-          </MobileMenu>
-        )}
+        <MobileMenu isOpen={isOpen}>
+          <MobileLink href="#about" onClick={() => setIsOpen(false)}>About</MobileLink>
+          <MobileLink href="#skills" onClick={() => setIsOpen(false)}>Skills</MobileLink>
+          <MobileLink href="#experience" onClick={() => setIsOpen(false)}>Experience</MobileLink>
+          <MobileLink href="#projects" onClick={() => setIsOpen(false)}>Projects</MobileLink>
+          <MobileLink href="#education" onClick={() => setIsOpen(false)}>Education</MobileLink>
+          <MobileLink href="#contact" onClick={() => setIsOpen(false)}>Contact</MobileLink>
+          <CVButton href={Bio.linkedin} target="display" style={{ width: "max-content" }}>
+            <LinkedInIcon sx={{ marginRight: 1 }} /> LinkedIn
+          </CVButton>
+        </MobileMenu>
       </NavbarContainer>
     </Nav>
   );
