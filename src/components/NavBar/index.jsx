@@ -24,8 +24,8 @@ export const Navbar = () => {
   return (
     <Nav>
       <NavbarContainer>
-        <NavLogo to="/">
-          <DiCssdeck size="3rem" color="white" />{" "}
+        <NavLogo href="#about">
+          <DiCssdeck size="3rem" color="white" />
           <Span style={{ color: "white" }}>Agustin Godinez</Span>
         </NavLogo>
         <MobileIcon>

@@ -97,6 +97,10 @@ export const ContactInputMessage = styled.textarea`
     border: 1px solid ${({ theme }) => theme.primary};
   }
 `;
+export const Span = styled.span`
+  font-size: 14px;
+  color: ${({ theme }) => theme.text_primary};
+`;
 
 export const ContactButton = styled.button`
   width: 100%;

@@ -1,6 +1,5 @@
-import { useRef } from "react";
-import { useState } from "react";
-import { Snackbar } from "@mui/material";
+import { useRef, useState } from "react";
+import { Alert, Snackbar } from "@mui/material";
 import {
   Container,
   Wrapper,
@@ -11,23 +10,43 @@ import {
   ContactInput,
   ContactInputMessage,
   ContactButton,
+  Span,
 } from "./ContactStyle";
+import { useForm } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 import emailjs from "@emailjs/browser";
 
-export const Contact = () => {
-  const [open, setOpen] = useState(false);
-  const form = useRef();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const schema = yup.object().shape({
+  from_email: yup
+    .string()
+    .email("Invalid email address")
+    .required("Email is required"),
+  from_name: yup.string().required("Name is required"),
+  message: yup.string().required("Message is required"),
+});
+export const Contact = () => {
+  const form = useRef();
+  const [open, setOpen] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+
+  const onSubmit = () => {
     emailjs
       .sendForm("service_ut0ywwj", "template_m5j03tl", form.current, {
         publicKey: "01kGmaDAp9es5_1pC",
       })
       .then(
-        (result) => {
+        () => {
           setOpen(true);
-          form.current.reset();
+          reset();
         },
         (error) => {
           console.log(error.text);
@@ -42,22 +61,40 @@ export const Contact = () => {
         <Desc>
           Feel free to reach out to me for any questions or opportunities!
         </Desc>
-        <ContactForm ref={form} onSubmit={handleSubmit}>
+        <ContactForm ref={form} onSubmit={handleSubmit(onSubmit)}>
           <ContactTitle>Email Me 🚀</ContactTitle>
-          <ContactInput placeholder="Your Email" name="from_email" />
-          <ContactInput placeholder="Your Name" name="from_name" />
-          <ContactInputMessage placeholder="Message" rows="4" name="message" />
-          <ContactButton type="submit" value="Send">
-            Send
-          </ContactButton>
+          <ContactInput placeholder="Your Email" {...register("from_email")} />
+          {errors.from_email && (
+            <Span className="">{errors.from_email.message}</Span>
+          )}
+          <ContactInput placeholder="Your Name" {...register("from_name")} />
+          {errors.from_name && <Span>{errors.from_name.message}</Span>}
+          <ContactInputMessage
+            placeholder="Message"
+            rows="4"
+            {...register("message")}
+          />
+          {errors.message && <Span>{errors.message.message}</Span>}
+          <ContactButton type="submit">Send</ContactButton>
         </ContactForm>
         <Snackbar
           open={open}
           autoHideDuration={6000}
           onClose={() => setOpen(false)}
-          message="Email sent successfully!"
-          severity="success"
-        />
+          style={{
+            position: "absolute",
+            marginBottom: "20px",
+          }}
+        >
+          <Alert
+            onClose={() => setOpen(false)}
+            severity="success"
+            variant="filled"
+            sx={{ width: "100%" }}
+          >
+            Email sent successfully!
+          </Alert>
+        </Snackbar>
       </Wrapper>
     </Container>
   );

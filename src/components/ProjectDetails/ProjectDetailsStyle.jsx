@@ -1,18 +1,5 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: #000000a7;
-  display: flex;
-  align-items: top;
-  justify-content: center;
-  overflow-y: scroll;
-  transition: all 0.5s ease;
-`;
 
 export const Wrapper = styled.div`
   max-width: 800px;

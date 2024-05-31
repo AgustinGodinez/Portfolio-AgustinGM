@@ -41,7 +41,7 @@ export const ProjectCards = ({ project }) => {
 ProjectCards.propTypes = {
   project: PropTypes.shape({
     image: PropTypes.string,
-    ImgCarous: PropTypes.string,
+    ImgCarous: PropTypes.arrayOf(PropTypes.string),
     tags: PropTypes.arrayOf(PropTypes.string),
     title: PropTypes.string,
     date: PropTypes.string,

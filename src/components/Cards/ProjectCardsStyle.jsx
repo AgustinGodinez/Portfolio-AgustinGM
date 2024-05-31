@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Button = styled.button`
   width: 100%;
-  margin-top: 20px;
+  margin-top: 10px;
   padding: 10px;
   background-color: ${({ theme }) => theme.primary};
   color: ${({ theme }) => theme.text_primary};
@@ -18,7 +18,7 @@ export const Button = styled.button`
 `;
 export const Card = styled.div`
   width: 400px;
-  height: 490px;
+  height: 510px;
   background-color: ${({ theme }) => theme.card};
   border-radius: 10px;
   box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.4);
